@@ -1,3 +1,5 @@
+This is Rico's installation of Octopress. You can find it live on the Internet at http://jane.ai
+
 ## What is Octopress?
 
 Octopress is [Jekyll](https://github.com/mojombo/jekyll) blogging at its finest.
