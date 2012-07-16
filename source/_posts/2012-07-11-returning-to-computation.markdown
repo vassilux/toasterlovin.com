@@ -69,4 +69,6 @@ Where things get really interesting is when you begin to realize that [computati
 [collective_systems]: http://edge.org/conversation/ants-have-algorithms "Ants Have Algorithms - Iain Couzin at Edge.org (video & transcript)"
 [robust_systems]: http://groups.csail.mit.edu/mac/users/gjs/6.945/readings/robust-systems.pdf "Building Robust Systems - Gerald Jay Sussman"
 
-At the end of all this I can't help but think to myself, "There's an entire lifetime of work in there for me." And that thought make me happy.
+With all this in mind, I can't help but think to myself, "There's a whole lifetime of work in there for me."
+
+What a wonderful thought!
