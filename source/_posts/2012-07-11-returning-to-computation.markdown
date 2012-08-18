@@ -53,9 +53,9 @@ Woah! A conditional. It's kind of a weird one -- `if` [looks like a call to a fu
 
 Building a home for myself
 -
-Making software with Excel turned out to be alternately deeply strange and downright blissful, but it marked the beginning of my return to Computation. The next big step was converting my company's `<table>` & `<img>` based website to an HTML & CSS based.
+Making software with Excel turned out to be alternately deeply strange and downright blissful, but it marked the beginning of my return to Computation. The next big step was converting my company's `<table>` & `<img>` based website to an HTML & CSS based design.
 
-This is the point where things really start to go fractal. It starts with selector specificity. Then it's the CSS box model. Then semantic markup. Soon I realize that I need something to handle templating for the website. Now it's Wordpress and writing little snippets of PHP. Oh, and JQuery happened somewhere in there.
+This is the point where things really start to go fractal. It starts with selector specificity. Then it's the CSS box model. Then semantic markup. Soon I realize that I need something to handle templating for the website. Now it's Wordpress and writing little snippets of PHP. Oh, and JQuery happened somewhere in there too.
 
 The thing is, it just doesn't stop. Soon I'm making command line utilites and Coda plugins in Perl. Somewhere along the way I start using MacVim. And Git. Then command line Vim + tmux. And regular expressions, object oriented programming, recursion and Big O notation.
 
@@ -69,6 +69,6 @@ Where things get really interesting is when you begin to realize that [computati
 [collective_systems]: http://edge.org/conversation/ants-have-algorithms "Ants Have Algorithms - Iain Couzin at Edge.org (video & transcript)"
 [robust_systems]: http://groups.csail.mit.edu/mac/users/gjs/6.945/readings/robust-systems.pdf "Building Robust Systems - Gerald Jay Sussman"
 
-With all this in mind, I can't help but think to myself, "There's a whole lifetime of work in there for me."
+Thinking about all these things to learn, I can't help but remark to myself, "There's a whole lifetime of work in there for me."
 
 What a wonderful thought!
