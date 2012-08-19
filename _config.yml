@@ -3,11 +3,11 @@
 # ----------------------- #
 
 url: http://jane.ai
-title: "Jane.ai"
+title: Jane.ai
 subtitle: Rico on the praxis of building software
-author: Rico
+author: Rico Jones
 simple_search: http://google.com/search
-description: Programming nerdery. Mostly about the act itself, but touching on related topics.
+description: Programming nerdery. Mostly about the act itself, but also touching on related topics.
 
 # Default date format is "ordinal" (resulting in "July 22nd 2007")
 # You can customize the format as defined in
@@ -19,7 +19,7 @@ date_format: "ordinal"
 subscribe_rss: /atom.xml
 subscribe_email:
 # RSS feeds can list your email address if you like
-email: rico at jane dot ai
+email: rico@jane.ai
 
 # ----------------------- #
 #    Jekyll & Plugins     #
@@ -27,7 +27,7 @@ email: rico at jane dot ai
 
 # If publishing to a subdirectory as in http://site.com/project set 'root: /project'
 root:
-permalink: /blog/:year/:month/:day/:title/
+permalink: /blog/:title/
 source: source
 destination: public
 plugins: plugins
@@ -58,13 +58,13 @@ default_asides: [asides/recent_posts.html, asides/github.html, asides/twitter.ht
 # ----------------------- #
 
 # Github repositories
-github_user:
-github_repo_count: 0
+github_user: ricolicious
+github_repo_count: 3
 github_show_profile_link: true
 github_skip_forks: true
 
 # Twitter
-twitter_user:
+twitter_user: ricolicious
 twitter_tweet_count: 4
 twitter_show_replies: false
 twitter_follow_button: true
@@ -89,7 +89,7 @@ delicious_user:
 delicious_count: 3
 
 # Disqus Comments
-disqus_short_name:
+disqus_short_name: janedotai
 disqus_show_comment_count: false
 
 # Google Analytics
