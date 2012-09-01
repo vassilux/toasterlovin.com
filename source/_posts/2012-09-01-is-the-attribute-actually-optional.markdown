@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Rails Unit Tests: Are optional attributes actually optional?"
+title: "Is the attribute actually optional?"
 date: 2012-09-01 11:01
 comments: true
 categories: Rails Testing
