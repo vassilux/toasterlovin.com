@@ -60,7 +60,7 @@ end
 ```
 ``` ruby
 class Product < ActiveRecord::Base
-  validates :part_number, :part_name, presence: true
+  validates :name, presence: true
   validates :weight, numericality: { greater_than_or_equal_to: 0 }
 end
 ```
