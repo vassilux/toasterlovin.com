@@ -1,6 +1,3 @@
-This is Rico's installation of Octopress. You can find it live on the Internet at http://jane.ai
-
-
 ## Copyright Notice
 
 Everything in this source code repository which is not part of Octopress (primarily things found in the "_config.yml" file and the "source" directory) is the property of Rico Jones. It is licensed for reuse under the Creative Commons AttributionShareAlike license, which can be found here: http://creativecommons.org/licenses/by-sa/3.0/legalcode.
