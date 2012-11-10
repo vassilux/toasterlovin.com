@@ -103,13 +103,13 @@ It's kinda wordy for my taste though, and will result in egregious violation of 
 ``` ruby test/test_helper.rb
 class ActiveSupport::TestCase
   # some other stuff
-  def self.test_optional_attribute(fixt, *attrs)
+  def self.test_optional_attribute(fixture_name, *attrs)
     attrs.each do |attr|
       test "#{attr} is optional" do
-        fixt = instance_variable_get("@#{fixt}")
-        assert fixt.valid?, "#{fixt} isn't a valid fixture"
-        fixt.send "#{attr}=", nil
-        assert fixt.valid?, "#{attr} should be optional"
+        fixture = instance_variable_get("@#{fixture_name}")
+        assert fixture.valid?, "#{fixture} isn't a valid fixture"
+        fixture.send "#{attr}=", nil
+        assert fixture.valid?, "#{attr} should be optional"
       end
     end
   end
@@ -121,7 +121,7 @@ Now we have a nice, succinct way to test all of our optional attributes in a sin
 ``` ruby
 class ProductTest < ActiveSupport::TestCase
   # other tests
-  test_optional_attribute :product, :weight # plus as many other attributes as we want to test
+  test_optional_attribute :product, :weight
 end
 ```
 
