@@ -2,9 +2,9 @@
 #      Main Configs       #
 # ----------------------- #
 
-url: http://jane.ai
-title: Jane.ai
-subtitle: Rico on the praxis of building software
+url: http://toasterlovin.com
+title: Toasterlovin
+subtitle: A journal about programming computers, by Rico Jones
 author: Rico Jones
 simple_search: http://google.com/search
 description: Programming nerdery. Mostly about the act itself, but also touching on related topics.
@@ -19,7 +19,7 @@ date_format: "ordinal"
 subscribe_rss: /atom.xml
 subscribe_email:
 # RSS feeds can list your email address if you like
-email: rico@jane.ai
+email: rico@toasterlovin.com
 
 # ----------------------- #
 #    Jekyll & Plugins     #
@@ -58,7 +58,7 @@ default_asides: [asides/recent_posts.html, asides/github.html, asides/twitter.ht
 # ----------------------- #
 
 # Github repositories
-github_user: ricolicious
+github_user: toasterlovin
 github_repo_count: 6
 github_show_profile_link: true
 github_skip_forks: false
@@ -89,7 +89,7 @@ delicious_user:
 delicious_count: 3
 
 # Disqus Comments
-disqus_short_name: janedotai
+disqus_short_name: toasterlovin
 disqus_show_comment_count: false
 
 # Google Analytics
