@@ -2,8 +2,8 @@
 layout: post
 title: "Leveling Up Revisited"
 date: 2013-04-19 20:57
-comments: true
-categories: Programming
+categories:
+- Programming
 ---
 
 I [previously wrote][previously] about leveling up as a programmer. At the time, I had forked a [list of programming achievements][jason-list] originally belonging to [Jason Rudolph][jason] and left his list mostly intact.

@@ -1,9 +1,12 @@
 ---
 layout: post
-title: "Are the fixtures valid?"
+title: "Are the Fixtures Valid?"
 date: 2012-08-18 16:29
 comments: true
-categories: Rails Testing
+categories:
+- Programming
+- Ruby on Rails
+- Testing
 ---
 
 A common pattern in my Ruby on Rails unit tests is to start with a valid instance of a model, make a change to the attribute I'm testing, then assert that the model instance is no longer valid.

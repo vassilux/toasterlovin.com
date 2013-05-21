@@ -2,8 +2,8 @@
 layout: post
 title: "The New Brain Worm"
 date: 2013-05-20 20:36
-comments: false
-categories: Frugality
+categories:
+- Frugality
 ---
 
 A couple of weeks ago, while meandering my way across the Internet, something interesting happened. I came across a website that contained a set of ideas so potent that they have since burrowed into my mind and made a permanent home there. In other words, I have been infected with a new brain worm. There's something unusual about this one, though.

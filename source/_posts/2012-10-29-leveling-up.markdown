@@ -2,8 +2,8 @@
 layout: post
 title: "Leveling Up"
 date: 2012-10-29 07:48
-comments: true
-categories: Programming
+categories:
+- Programming
 ---
 
 I recently read a blog post by [Jason Rudolph][jason] about [leveling up as a software developer][level-up]. To paraphrase him, the idea is to:

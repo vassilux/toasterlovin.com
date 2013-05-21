@@ -1,9 +1,12 @@
 ---
 layout: post
-title: "Is the attribute actually optional?"
+title: "Is the Attribute Actually Optional?"
 date: 2012-09-01 11:01
 comments: true
-categories: Rails Testing
+categories:
+- Programming
+- Ruby on Rails
+- Testing
 ---
 
 Ruby on Rails model attributes are optional by default. That is, unless you specify otherwise, an attribute is _not_ required for a model instance to be valid. I like to test that this is, in fact, the case.

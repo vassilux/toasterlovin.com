@@ -2,9 +2,8 @@
 layout: post
 title: "Returning to Computation"
 date: 2012-07-11 09:07
-comments: true
 categories:
-published: true
+- Programming
 ---
 
 Way back in the day, when I was in college, I took a class on basic programming with C++. I only did _okay_ in that class, but the concepts really stuck. There was something about decomposing work into it's fundamental units -- variables, conditionals and loops -- that struck me as _true_.
