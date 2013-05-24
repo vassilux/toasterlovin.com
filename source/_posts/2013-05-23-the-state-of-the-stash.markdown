@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "The State of the Stash"
+title: "The State of the 'Stash"
 date: 2013-05-23 16:48
 categories:
 - Frugality
