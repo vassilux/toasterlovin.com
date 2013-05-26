@@ -6,7 +6,7 @@ categories:
 - Frugality
 ---
 
-[Mustachianism][mustachianism], the new feudal lord of my brain and its sundry outlying territories, is all about optimizing the fundamental tradeoff we all face between time and money. That tradeoff works like this.
+[Mustachianism][mustachianism], the new [feudal lord of my brain][brain-worm] and its sundry outlying territories, is all about optimizing the fundamental tradeoff we all face between time and money. That tradeoff works like this.
 
 <!-- more -->
 
@@ -24,7 +24,9 @@ Here are the areas he identified, in order of importance:
 - Shopping
 - Monthly Bills
 
-In the next few posts, I am going to look at each of these areas and examine how my own family compares to the <strike>Platonic</strike> Mustachian ideal.
+In the next few posts, I am going to look at each of these areas and examine how my own family compares to the <strike>Platonic</strike> Mustachian ideal. In other words, I'll be measuring our [Money Mustache][stash]
 
 [mmm]: http://www.mrmoneymustache.com/
 [mustachianism]: http://www.mrmoneymustache.com/2013/02/22/getting-rich-from-zero-to-hero-in-one-blog-post/
+[brain-worm]: /the-new-brain-worm/
+[stash]: http://www.mrmoneymustache.com/2011/08/31/why-are-you-named-mr-money-mustache-anyway/
