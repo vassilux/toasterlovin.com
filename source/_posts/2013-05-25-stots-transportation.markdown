@@ -6,7 +6,7 @@ categories:
 - Frugality
 ---
 
-_The first part in an ongoing examination of the [State of the 'Stash][stots] (StotS)._
+_The second part in an [ongoing examination of the State of the 'Stash][stots] (StotS)._
 
 For most families, transportation means cars. The cars that your typical family buys and the manner in which they are used, when taken together, are [Mr. Money Mustache's][mmm] single favorite target for his [Divine Wrath][wrath]. A Mustachian family buys only the smallest _used_ car that fits their _actual_ transportation needs, then uses that car only when _absolutely necessary_, opting to use a bicycle or legs whenever possible.
 
