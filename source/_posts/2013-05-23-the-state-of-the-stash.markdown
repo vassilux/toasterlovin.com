@@ -19,7 +19,7 @@ Now, he didn't just stop there. Nope. Instead, Mr. Money Mustache, in his unendi
 Here are the areas he identified, in order of importance: 
 
 - Transportation -- [how we're doing][transportation]
-- Housing
+- Housing -- [how we're doing][housing]
 - Food
 - Shopping
 - Monthly Bills
@@ -31,3 +31,4 @@ In the next few posts, I am going to look at each of these areas and examine how
 [brain-worm]: /the-new-brain-worm/
 [stash]: http://www.mrmoneymustache.com/2011/08/31/why-are-you-named-mr-money-mustache-anyway/
 [transportation]: /stots-transportation/
+[housing]: /stots-housing/
