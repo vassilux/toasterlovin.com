@@ -8,9 +8,9 @@ categories:
 
 [Mustachianism][mustachianism], the new [feudal lord of my brain][brain-worm] and its sundry outlying territories, is all about optimizing the fundamental tradeoff we all face between time and money. That tradeoff works like this.
 
-<!-- more -->
-
 We each get a set amount of time and, no matter what we do, we can't get more of it. Now, we all want to do lots of cool shit with our fixed allotment of time, like raising a family, hanging out with friends, and pursuing hobbies, but getting the necessities of life requires money and getting money requires time. So, and this is where it all gets fucked up, we have to _trade_ some of the _time_ that we would otherwise spend doing what we _want_ for _money_ to pay for the stuff we _need_, like food and shelter.
+
+<!-- more -->
 
 The fundamental insight of [Mr. Money Mustache][mmm], the inventor of Mustachianism, is that the amount of money we _think_ we need to cover the necessities of life is way more than we _actually_ need; that most of the shit we spend money on is _completely unnecessary_. In other words, we are wasting money. And where there's waste, there's room for optimization.
 

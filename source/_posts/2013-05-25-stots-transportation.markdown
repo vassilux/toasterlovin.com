@@ -10,13 +10,13 @@ _The second part in an [ongoing examination of the State of the 'Stash][stots] (
 
 For most families, transportation means cars. The cars that your typical family buys and the manner in which they are used, when taken together, are [Mr. Money Mustache's][mmm] single favorite target for his [Divine Wrath][wrath]. A Mustachian family buys only the smallest _used_ car that fits their _actual_ transportation needs, then uses that car only when _absolutely necessary_, opting to use a bicycle or legs whenever possible.
 
-<!-- more -->
-
 That means new cars, luxury cars, SUVs and pickups are all off the table for most families. Basically, the car you get should be the car you would buy if cars and gasoline were both 10 times more expensive than they are now. For most families that means a used hatchback sedan and/or a used minivan, but never two of the same kind of car.
 
 The other prong in the Mustachian approach to transportation is to aggressively reduce driving and replace it with bicycling. The single most effective way to accomplish this is to live within bicycling distance of work and then bike to work. This is the point at which Mr. Money Mustache would add the [obligatory comment about the other amazing benefits of using a bicycle][bikes].
 
 So, how Mustachian is our family when it comes to transportation?
+
+<!-- more -->
 
 Fairly Mustachian. Living near work is one of the key tenets of [Mustachianism][mustachianism] and I live as close to work as possible; I work from home. Mr. Money Mustache's main reason behind this tenet is cost -- money spent commuting can add up to a huge amount over a lifetime. My reasons for not driving to work are a little different: I really enjoy being around my wife and driving a car is incredibly uncomfortable for me because I'm so tall. So, a few years back, after making myself essential at work, I arranged to start working from home.
 
