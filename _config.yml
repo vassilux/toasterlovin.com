@@ -3,11 +3,11 @@
 # ----------------------- #
 
 url: http://toasterlovin.com
-title: toasterlovin
-subtitle: A place on the Internet for Rico Jones
+title: "Toaster Lovin'"
+subtitle: Rico Jones on programming
 author: Rico Jones
 simple_search: http://google.com/search
-description: Various stuff I care about; living life well, programming computers, etc.
+description: Adventures in programming computers
 
 # Default date format is "ordinal" (resulting in "July 22nd 2007")
 # You can customize the format as defined in
