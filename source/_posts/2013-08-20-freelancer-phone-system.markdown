@@ -6,6 +6,16 @@ comments: true
 categories: 
 ---
 
+In this guide I'm going to show you how to:
+
+1. Purchase a phone number that people can dial
+2. Ring a phone on your desk when people dial that number
+3. Route your outgoing calls to the PSTN
+4. Setup a voicemail system that emails voicemail recordings to you
+5. Route 911 calls to your local emergency services
+
+*This makes sense if you a) don't make many phone calls, b) already have a server running on the Internet, c) are happy configuring Asterisk.*
+
 I am a freelance web developer who works from home. As a result, I need to make and receive phone calls about work stuff on a fairly regular basis. About a year ago, I determined that a dedicated phone number which rang an actual telephone on my desk would suit my needs best.
 
 I had tried taking business calls on my mobile phone, but having business spill over into my personal life was maddening. I had also tried a [Skype phone number][skype-number], but I found managing multiple audio sources on my computer to be cumbersome. A desk phone with large physical buttons, a good speakerphone, and voicemail indicator lights sounded like an improvement.
@@ -16,55 +26,41 @@ Around this time I saw [a presentation][asterisk-talk] by [Mike Frager][mike-fra
 
 Stupidly, I thought to myself, "How hard can this be?".
 
-I will spare you a bunch of bitching and moaning and just say that you are a lucky soul, indeed, to have gone down this path after me.
-
-In this guide I'm going to show you how to:
-
-1. Purchase a phone number that people can dial
-2. Ring a phone on your desk when people dial that number
-3. Route your outgoing calls to the PSTN
-4. Setup a voicemail system that emails voicemail recordings to you
-5. Route 911 calls to your local emergency services
+I will spare you a bunch of bitching and moaning about what a travesty the Asterisk and VoIP resources Google surfaces are and just say that you are a lucky soul, indeed, to have walked down this path after me.
 
 # Hardware and Software
 
-Though we're ultimately trying to get some hardware working, all the important stuff will happen in software. That software is a default installation of Asterisk on a Linux server which is connected directly to the Internet (in other words, _not_ behind [NAT][nat]). You're on your own getting Asterisk installed, but I can say that for me, on Ubuntu 12.04, it involved doing simply:
+Though we're ultimately trying to get some hardware working, all the important stuff will happen in software. That software is a default installation of Asterisk on a Linux server which is connected directly to the Internet (in other words, _not_ behind [NAT][nat]). You're on your own getting Asterisk installed, but I can say that for me, on [Ubuntu 12.04][12.04], it involved doing simply:
 
     $ sudo apt-get install asterisk
 
-For hardware, your options are limitless. I am personally using a Panasonic [TGP-550][tgp-550] DECT phone system, which might not be a great choice for your needs. [DECT][dect] phone systems are basically like the cordless phone you may have once had plugged into a land line at some point in your life.
+For hardware, your options are limitless. I am personally using a Panasonic [tgp550][tgp550] DECT phone system, which might not be a great choice for your needs. [DECT][dect] phone systems are basically like the cordless phone you may have had plugged into a land line at some point in your life.
 
-This particular system has two phones: a desk phone, which doubles as the base station, plus a separate cordless phone. You can get a version of it, the [TGP-500][tgp-500], that replaces the desk phone with a dedicated base station and additional cordless handset. And you can buy additional cordless handsets (up to 6, I believe).
+This particular system has two phones: a desk phone, which doubles as the base station, plus a separate cordless phone. You can get a version of it, the [tgp500][tgp500], that replaces the desk phone with a dedicated base station. And you can buy additional cordless handsets (up to 6, I believe).
 
 I chose this particular system because I an using Asterisk for both home and office lines and the cordless handsets fit into my idea of what a home phone should look like.
 
-If you just want a phone on your desk, there are tons of phones that look like more traditional office phones. Any phone that can do [SIP][sip] will work. Keep in mind that whatever phone you use will need an Internet connection. Many VoIP phones only have wired network connections. I ended up using a WiFi access point to create a network bridge to my phone system.
+If you just want a phone on your desk, there are tons of phones that look like more traditional office phones. Any phone that can do [SIP][sip] will work. One thing to keep in mind: many VoIP phones only have wired network ports. I ended up using a WiFi access point to bridge my home network and provide a wired Ethernet connection to my phone.
 
-Finally, you will need to use a VoIP service provider to route incoming calls to your Asterisk system and outgoing calls to the [Public Switched Telephone Network][pstn]. For this, we will use [Flowroute][flowroute]. My intuition is that there isn't anything particularly special about Flowroute, but they're what I know.
+Finally, you will need to use a VoIP service provider to route incoming and outgoing calls between your Asterisk system and the [Public Switched Telephone Network][pstn]. For this, we will use [Flowroute][flowroute]. My intuition tells me there isn't anything particularly special about Flowroute, but they're what I know.
 
 # Costs
 
-Setup costs:
+So, what's this endeavor gonna cost you? We'll start with the setup costs.
 
-- Phone: $186.99 for cordless handset only or $219.99 for desk phone + cordless phone
-- Phone number setup: $1.00 whether it's a new number or a ported number
-- Phone number port: $7.50
+You're going to need a phone. The system I have, the [tgp550][tgp550] (it has a desk phone, plus a cordless handset), runs [about $230 on Amazon][tgp550-amazon]. It's brother, the [tgp550][tgp550] (just the cordless handset), runs [about $170 on Amazon][tgp500-amazon]. [Additional handsets][tpa50] run [about $80 on amazon][tpa50-amazon].
 
-Office line only without port: $187.99
-Office line only with port: $196.49
-Office + Home lines without number ports: $221.99
-Office + Home lines with number ports: $236.99
+If you want a more traditional desk phone, the [Cisco SPA525G2][spa525] is a good option. It has wifi, which can save you some hassle and expense if your desk isn't near your router. It also has bluetooth and does some fancy shit, like allow you to answer cell phone calls on your desk phone. You can pick one of these up for [about $180 on Amazon][spa525-amazon].
 
-|Configuration      |New Numbers ($1 setup fee each)|Ported Numbers ($1 setup fee + $7.50 each)|
-|Office Line        |$187.99                        |$196.49                                   |
-|Office + Home Lines|$221.99                        |$236.99                                   |
+I have to give you a heads up about the Cisco phone though: I experienced some pretty serious call quality issues when I had one. I am 99% convinced that I had a configuration problem, since I don't really know what the fuck I'm doing, but I never got around to actually figuring out what the problem was. Instead, I had a baby and then switched to the Panasonic system, since it's a better fit for my setup (office _and_ home phone lines).
 
-Recurring costs:
+There are also some nominal setup costs that you'll incur through Flowroute. They'll charge you $1.00 per phone number to get service started with them, plus an additional $7.50 per phone number that you want to have ported over (porting a phone number is when you transfer an existing phone number from one provider to another).
 
-- Phone number: $1.25 per month per phone number
-- E911 service: $1.39 per month per phone number
-- Incoming calls: 1.2 cents per minute or $6.25 per line unlimited
-- Outgoing calls: 0.98 cents perminute to US48 + Canada, see [Flowroute's outbound rates][outgoing-rates] for other destinations
+Now let's take a look at your recurring costs, 'cause really, this is what matters. The $200 you spend on a phone should be amortized over a long time and work out to a miniscule monthly cost. If you keep your phone for 5 years, that works out to $3.33 per month. And that's before you sell the fuckin' thing on eBay.
+
+Each phone number is going to cost you $1.25 per month, plus an additional $1.39 per month if you want to be able to dial 911 from that number. Incoming calls cost 1.2 cents per minute; unlimited incoming is $6.25 per phone number per month. Outgoing rates are based on destination. It's 0.98 cents per minute to the [contiguous United States][US48] & Canada. For the rest of the world, see [Flowroute's outbound rates][outgoing-rates].
+
+So those are all the costs, with one big caveat: you need a server which is permanently connected to the Internet. This whole deal really only makes sense if you already have one. If you add the monthly cost of a VPS, it ends up making more sense just paying for a phone line through your local telco.
 
 # Configuration
 
@@ -76,7 +72,17 @@ Steps:
 4. Route inbound calls
 5. Route outbound calls
 
-{% codeblock sip.conf lang:ini %}
+## Forward calls from Flowroute to Asterisk
+
+## Connect Asterisk to Flowroute
+
+Now that we've got Flowroute configured to send incoming calls to Asterisk, we need to get Asterisk connected to Flowroute so we can send outgoing calls to the outside world, also known as the Public Switched Telephone Network.
+
+Asterisk thinks about how it connects to the outside world in terms of channels. So when this project is all said and done, your Asterisk server will have two channels: one connecting it to your phone and another connecting it to Flowroute. Right now, we'll concern ourselves with the Flowroute channel.
+
+The default install of Asterisk puts a shitload of configuration files into `/etc/asterisk`. The one we're looking for is `sip.conf`, since we will be configuring a [SIP][sip] channel. So start by putting this into `/etc/asterisk/sip.conf`.
+
+{% codeblock /etc/asterisk/sip.conf lang:ini %}
 [flowroute]
 host=sip.flowroute.com
 username=12345678
@@ -90,7 +96,23 @@ canreinvite=no
 disallow=all
 allow=ulaw
 insecure=port,invite
+{% endcodeblock %}
 
+What's this all mean? Well, starting from the top: we're defining a channel called `flowroute`, then specifying a `host` to connect to, plus a `username` and `password` to use when connecting. Next, we specify the `context` that calls from this channel should use to enter The Dialplan.
+
+The Dialplan is the meat and potatoes of Asterisk. It's where you define what happens to a inbound and outbound calls. Stuff like, ring this phone for 20 seconds, then go to voicemail. Contexts are _segments_ of The Dialplan. They're handy because you want to do different things with outbound and inbound calls.
+
+As for the rest of these, well...
+
+To be honest, I don't know what half of 'em do. Some of them are pretty obvious (`nat`) and others are not so much (`canreinvite` and `insecure`). I was going to research them so I could at least _seem_ like I have my shit together, but the state of Asterisk documentation is a travesty.
+
+But I will say this: they come from the recommended `sip.conf` that Flowroute provides and I can vouch for the fact that they will result in a working Asterisk configuration.
+
+## Connect your phone to Asterisk
+
+We need to create one more channel, so our phone can connect to Asterisk. These settings also go in `/etc/asterisk/sip.conf`, since our phone will also be connecting to Asterisk via SIP. It doesn't matter where, but you can't go wrong just appending them to the bottom, below your `[flowroute]` channel.
+
+{% codeblock /etc/asterisk/sip.conf lang:ini %}
 [13235550100]
 host=dynamic
 secret=password
@@ -104,7 +126,31 @@ insecure=port,invite
 qualify=yes
 {% endcodeblock %}
 
-{% codeblock extensions.conf lang:ini %}
+Overall, this channel looks fairly similar to the `[flowroute]` channel. There are a few differences, though. Here we're using your phone number as the name of the channel. Not only does this just make sense to me, but we're also going to exploit this fact to do some clever tricks later on when we get to The Dialplan.
+
+The other major difference is the `context` setting. Above, we're sending calls from the `[flowroute]` channel to the `inbound` context. Here, we're sending calls from your phone to the `localexts` context. As I mentioned above, we want to do different things with inbound and outbound calls; sending them to different contexts in The Dialplan is what allows us to do that.
+
+There are a few more, minor differences between this channel and the `[flowroute]` channel. First, your phone doesn't have a hostname, so `host` is set to `dynamic`. Also, your phone is behind a router, so `nat` is set to `yes`. Lastly, we don't need a `username` because we'll use the name of the channel instead.
+
+I think that covers all of the differences, but if not, just copy and paste away in blissful ignorance.
+
+## Route inbound calls
+
+Now we're getting to the fun stuff. We're going to start you off with some training wheels, though, because we've got some new concepts to cover. For the time being, all we want to do with inbound calls is ring your phone. We'll get to voicemail a little later.
+
+We take care of routing calls in The Dialplan. Though I have exalted it throughout this document with [title case][titlecase], The Dialplan is really just a configuration file called `extensions.conf`. So let's start by putting this in `/etc/asterisk/extensions.conf` and then we'll go through what it all means.
+
+{% codeblock /etc/asterisk/extensions.conf lang:ini %}
+[inbound]
+exten => _1NXXNXXXXXX,1,NoOp()
+  same => n,Dial(SIP/${EXTEN})
+{% endcodeblock %}
+
+The first thing we're doing is defining a context, `[inbound]`. This is the same syntax we used above, in `sip.conf` to define SIP channels, except in this file it creates contexts. The name of the context may also be familiar to you, because it's the same context we specified in the configuration for the `[flowrout]` channel.
+
+## Route outbound calls
+
+{% codeblock /etc/asterisk/extensions.conf lang:ini %}
 [localexts]
 ; Emergency services, remember to test this
 exten => 911,1,NoOp()
@@ -129,7 +175,11 @@ exten => _1NXXNXXXXXX,1,NoOp()
   same => n(outbound),Set(CALLERID(num)=${LINE})
   same => n,Dial(SIP/${EXTEN}@flowroute)
   same => n,Hangup()
+{% endcodeblock %}
 
+## Setup voicemail
+
+{% codeblock /etc/asterisk/extensions.conf lang:ini %}
 [inbound]
 exten => _1NXXNXXXXXX,1,NoOp()
   same => n,Dial(SIP/${EXTEN},20)
@@ -159,6 +209,10 @@ pacific=America/Los_Angeles|'vm-received' Q 'digits/at' IMp
 13235550100 => 1234,First Last,email@domain.com
 {% endcodeblock %}
 
+## Emergency Dialing
+
+A word about enabling 911 on your phone: if you're the type that always has your cell phone in your pocket and you're only going to have an office phone (that a significant other or child wont reach for in an emergency), then this may not make sense for you. My wife and I share a cell phone, and it stays in the car. Other than that, the VoIP phones are the only phones in the house, so you better believe I enabled 911.
+
 # Glossary of Terms
 
 - DID
@@ -172,8 +226,6 @@ pacific=America/Los_Angeles|'vm-received' Q 'digits/at' IMp
 
 [asterisk]: http://www.asterisk.org/
 [ubuntu]: http://www.ubuntu.com/
-[tgp-500]: http://www.panasonic.com/business/psna/products-home-business/sip-communications/Hosted-Open-Source-Market/KX-TGP500.aspx
-[tgp-550]: http://www.panasonic.com/business/psna/products-home-business/sip-communications/Hosted-Open-Source-Market/KX-TGP550.aspx
 [flowroute]: http://flowroute.com/
 [outgoing-rates]: http://flowroute.com/services/rates/
 [skype-number]: http://www.skype.com/en/features/online-number/
@@ -183,3 +235,15 @@ pacific=America/Los_Angeles|'vm-received' Q 'digits/at' IMp
 [nat]: http://en.wikipedia.org/wiki/Network_address_translation
 [dect]: http://en.wikipedia.org/wiki/Digital_Enhanced_Cordless_Telecommunications
 [sip]: http://en.wikipedia.org/wiki/Session_Initiation_Protocol
+[pstn]: http://en.wikipedia.org/wiki/Public_switched_telephone_network
+[12.04]: http://releases.ubuntu.com/precise/
+[tgp500]: http://www.panasonic.com/business/psna/products-home-business/sip-communications/Hosted-Open-Source-Market/KX-TGP500.aspx
+[tgp500-amazon]: http://www.amazon.com/Panasonic-KX-TGP500-DECT-Phone-System/dp/B0058FJLBG
+[tgp550]: http://www.panasonic.com/business/psna/products-home-business/sip-communications/Hosted-Open-Source-Market/KX-TGP550.aspx
+[tgp550-amazon]: http://www.amazon.com/Panasonic-KX-TGP550-SIP-DECT-Phone/dp/B002SUEQBY
+[tpa50]: http://www.panasonic.com/business/psna/products-home-business/sip-communications/Hosted-Open-Source-Market/KX-TPA50.aspx
+[tpa50-amazon]: http://www.amazon.com/Panasonic-KX-TPA50B04-KX-TPA50-Cordless-Handset/dp/B002SUAQ1I
+[spa525]: http://www.cisco.com/en/US/prod/collateral/voicesw/ps6788/phones/ps10499/ps11005/data_sheet_c78-603725.html
+[spa525-amazon]: http://www.amazon.com/Cisco-spa525G2-5-Line-IP-Phone/dp/B003UMCMU6
+[US48]: http://en.wikipedia.org/wiki/Contiguous_United_States
+[titlecase]: http://www.grammar-monster.com/lessons/capital_letters_title_case.htm
