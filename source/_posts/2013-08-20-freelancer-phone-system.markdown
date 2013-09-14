@@ -48,7 +48,7 @@ Finally, you will need to use a VoIP service provider to route incoming and outg
 
 So, what's this endeavor gonna cost you? We'll start with the setup costs.
 
-You're going to need a phone. The system I have, the [tgp550][tgp550] (it has a desk phone, plus a cordless handset), runs [about $230 on Amazon][tgp550-amazon]. It's brother, the [tgp550][tgp550] (just the cordless handset), runs [about $170 on Amazon][tgp500-amazon]. [Additional handsets][tpa50] run [about $80 on amazon][tpa50-amazon].
+You're going to need a phone. The system I have, the [TGP550][tgp550] (it has a desk phone, plus a cordless handset), runs [about $230 on Amazon][tgp550-amazon]. It's sibling, the [TGP550][tgp550] (just the cordless handset), runs [about $170 on Amazon][tgp500-amazon]. [Additional handsets][tpa50] run [about $80 on amazon][tpa50-amazon].
 
 If you want a more traditional desk phone, the [Cisco SPA525G2][spa525] is a good option. It has wifi, which can save you some hassle and expense if your desk isn't near your router. It also has bluetooth and does some fancy shit, like allow you to answer cell phone calls on your desk phone. You can pick one of these up for [about $180 on Amazon][spa525-amazon].
 
@@ -56,11 +56,11 @@ I have to give you a heads up about the Cisco phone though: I experienced some p
 
 There are also some nominal setup costs that you'll incur through Flowroute. They'll charge you $1.00 per phone number to get service started with them, plus an additional $7.50 per phone number that you want to have ported over (porting a phone number is when you transfer an existing phone number from one provider to another).
 
-Now let's take a look at your recurring costs, 'cause really, this is what matters. The $200 you spend on a phone should be amortized over a long time and work out to a miniscule monthly cost. If you keep your phone for 5 years, that works out to $3.33 per month. And that's before you sell the fuckin' thing on eBay.
+Now let's take a look at your recurring costs, 'cause really, that's what matters. The $200 you spend on a phone should be amortized over a long time and work out to a miniscule monthly cost. If you keep your phone for 5 years, that works out to $3.33 per month. And that's before you sell the fuckin' thing on eBay.
 
 Each phone number is going to cost you $1.25 per month, plus an additional $1.39 per month if you want to be able to dial 911 from that number. Incoming calls cost 1.2 cents per minute; unlimited incoming is $6.25 per phone number per month. Outgoing rates are based on destination. It's 0.98 cents per minute to the [contiguous United States][US48] & Canada. For the rest of the world, see [Flowroute's outbound rates][outgoing-rates].
 
-So those are all the costs, with one big caveat: you need a server which is permanently connected to the Internet. This whole deal really only makes sense if you already have one. If you add the monthly cost of a VPS, it ends up making more sense just paying for a phone line through your local telco.
+So those are all the costs, with one big caveat: you need a server which is permanently connected to the Internet. This whole deal really only makes sense if you already have one. If you add the monthly cost of a [VPS][vps], it ends up making more sense to just pay for a phone line through your local telco.
 
 # Configuration
 
@@ -104,13 +104,13 @@ The Dialplan is the meat and potatoes of Asterisk. It's where you define what ha
 
 As for the rest of these, well...
 
-To be honest, I don't know what half of 'em do. Some of them are pretty obvious (`nat`) and others are not so much (`canreinvite` and `insecure`). I was going to research them so I could at least _seem_ like I have my shit together, but the state of Asterisk documentation is a travesty.
+To be honest, I don't know what half of 'em do. Some of them are pretty obvious (`nat`) and others are not so much (`canreinvite` and `insecure`). I was going to research them so I could at least _seem_ like I have my shit together, but the state of Asterisk documentation is an [utter][docs1] [travesty][docs2].
 
 But I will say this: they come from the recommended `sip.conf` that Flowroute provides and I can vouch for the fact that they will result in a working Asterisk configuration.
 
 ## Connect your phone to Asterisk
 
-We need to create one more channel, so our phone can connect to Asterisk. These settings also go in `/etc/asterisk/sip.conf`, since our phone will also be connecting to Asterisk via SIP. It doesn't matter where, but you can't go wrong just appending them to the bottom, below your `[flowroute]` channel.
+We need to create one more channel so our phone can connect to Asterisk. These settings also go in `/etc/asterisk/sip.conf`, since our phone will also be connecting to Asterisk via SIP. It doesn't matter where, but you can't go wrong just appending them to the bottom, below the `[flowroute]` channel.
 
 {% codeblock /etc/asterisk/sip.conf lang:ini %}
 [13235550100]
@@ -142,11 +142,31 @@ We take care of routing calls in The Dialplan. Though I have exalted it througho
 
 {% codeblock /etc/asterisk/extensions.conf lang:ini %}
 [inbound]
-exten => _1NXXNXXXXXX,1,NoOp()
-  same => n,Dial(SIP/${EXTEN})
+exten => _1NXXNXXXXXX,1,Dial(SIP/${EXTEN})
 {% endcodeblock %}
 
-The first thing we're doing is defining a context, `[inbound]`. This is the same syntax we used above, in `sip.conf` to define SIP channels, except in this file it creates contexts. The name of the context may also be familiar to you, because it's the same context we specified in the configuration for the `[flowrout]` channel.
+The first thing we're doing is defining a context, `[inbound]`. This is the same syntax we used above, in `sip.conf`, to define SIP channels, except that here it creates a context. The name of the context should also be familiar to you, because it's the same one that the `[flowroute]` channel is configured to send calls to.
+
+In the next line, we're capturing the extension that was dialed, then dialing the SIP channel with the same name. I probably lost you there, so let's back up for a second.
+
+In Asterisk, an extension is essentially "what the user dialed". Since this is the context where all the calls from the PSTN to your phone number get dumped, every single call going through it will be to the same extension: your phone number. Right? Because, for every call to your phone number, the user will have dialed... your phone number.
+
+Since we cleverly used your _phone number_ as the name of the SIP channel for your _phone_, all we have to do with inbound calls is dial the SIP channel with the same name as the extension. This single line also has the benefit of accomodating additonal phone numbers, as long as we follow the same convention of naming our SIP channels after our phone numbers.
+
+Okay, that's _what_ we're accomplishing, but let's dig ito _how_ we are accomplishing it. Here's that line again:
+
+{% codeblock lang:ini %}
+exten => _1NXXNXXXXXX,1,Dial(SIP/${EXTEN})
+{% endcodeblock %}
+
+To start, `exten =>` is just the syntax used to specify that we're creating a dialplan for a specific extension. A context can contain dialplans for many different extensions, but we're only specifying one (we'll get to multiple extensions in the `[outbound]` context).
+
+Then we specify the number of the extension we're creating a dialplan for with `_1NXXNXXXXXX`. Well, a numeric extension, like `100` or `101`, is what you might _typically_ see at this point, but we're actually specifying a pattern, which is denoted by the leading underscore.
+
+In a pattern, `0-9` match themselves, `X` matches a single digit from 0-9, `Z` matches a single digit from 1-9, and `N` matches a single digit from 2-9. So, this particular pattern matches a North American phone number.
+
+That is, it matches the 1 before the area code (`1`), then the area code (`NXX`), then the "local" part of the phone number (`NXXXXXX`). Apparently the area code and "local" part of the number do not start with 0 or 1.
+
 
 ## Route outbound calls
 
@@ -247,3 +267,6 @@ A word about enabling 911 on your phone: if you're the type that always has your
 [spa525-amazon]: http://www.amazon.com/Cisco-spa525G2-5-Line-IP-Phone/dp/B003UMCMU6
 [US48]: http://en.wikipedia.org/wiki/Contiguous_United_States
 [titlecase]: http://www.grammar-monster.com/lessons/capital_letters_title_case.htm
+[vps]: http://en.wikipedia.org/wiki/Virtual_private_server
+[docs1]: https://wiki.asterisk.org/wiki/display/AST/Asterisk+1.8+Documentation
+[docs2]: http://www.voip-info.org/wiki/view/Asterisk+-+documentation+of+application+commands
