@@ -159,32 +159,47 @@ Okay, that's _what_ we're accomplishing, but let's dig ito _how_ we are accompli
 exten => _1NXXNXXXXXX,1,Dial(SIP/${EXTEN})
 {% endcodeblock %}
 
-To start, `exten =>` is just the syntax used to specify that we're creating a dialplan for a specific extension. A context can contain dialplans for many different extensions, but we're only specifying one (we'll get to multiple extensions in the `[outbound]` context).
+To start, `exten =>` is the syntax we use to specify that we're creating a dialplan for a specific extension. We follow it up with three arguments, separated by commas: the Extension, the Priority, and the Application.
 
-Then we specify the number of the extension we're creating a dialplan for with `_1NXXNXXXXXX`. Well, a numeric extension, like `100` or `101`, is what you might _typically_ see at this point, but we're actually specifying a pattern, which is denoted by the leading underscore.
+An Extension might typically be a number, like `100` or `101`, but we're using a pattern, `_1NXXNXXXXXX`, which you can always identify by the leading underscore. In a pattern, the digits `0-9` match themselves, `X` matches a single digit from 0-9, `Z` matches a single digit from 1-9, and `N` matches a single digit from 2-9.
 
-In a pattern, `0-9` match themselves, `X` matches a single digit from 0-9, `Z` matches a single digit from 1-9, and `N` matches a single digit from 2-9. So, this particular pattern matches a North American phone number.
+This particular pattern matches a North American phone number. That is, it matches the 1 before the area code (`1`), then the area code (`NXX`), then the "local" part of the phone number (`NXXXXXX`). Apparently, the area code and "local" part of the number never start with 0 or 1.
 
-That is, it matches the 1 before the area code (`1`), then the area code (`NXX`), then the "local" part of the phone number (`NXXXXXX`). Apparently the area code and "local" part of the number do not start with 0 or 1.
+The Priority is used to tell Asterisk what order to execute applications in. We'll gloss over the piority for now, since we're only using one application here, which is...
 
+The `Dial` Application. Applications in Asterisk look and behave a lot like function calls in C-like programming languages. In fact, I think the word _command_ would have been a better choice. Here we're using `Dial` with a single argument, `SIP/${EXTEN}`, which is a string with a variable interpolated into it.
+
+All SIP channel names start with `SIP/`, so you know this will be dialing a SIP channel. The next part, `${EXTEN}`, interpolates the `EXTEN` variable into the string. `EXTEN` is a special variable that always contains the current extension. So, if the caller dialed 1 (323) 555-1212, the entire string would work out to `SIP/13235551212`.
+
+Since this is the `[inbound]` context, the `EXTEN` variable will always be _your phone number_, which is perfect, since the SIP channel we want to dial -- the one that will ring your phone -- bears _your phone number_ as it's name.
 
 ## Route outbound calls
 
 {% codeblock /etc/asterisk/extensions.conf lang:ini %}
 [localexts]
-; Emergency services, remember to test this
-exten => 911,1,NoOp()
+exten => _1NXXNXXXXXX,1,NoOp()
   same => n,Set(CALLERID(num)=${CHANNEL:4:11})
   same => n,Dial(SIP/${EXTEN}@flowroute)
+{% endcodeblock %}
 
-; Send to voicemail
-exten => 1,1,Goto(${CHANNEL:4:11},1)
-
-; Strip plus sign
-exten => _+X!,1,Goto(${EXTEN:1},1)
-
+{% codeblock /etc/asterisk/extensions.conf lang:ini %}
+[localexts]
 ; Add 1 before area code
 exten => _NXXNXXXXXX,1,Goto(1${EXTEN},1)
+{% endcodeblock %}
+
+{% codeblock /etc/asterisk/extensions.conf lang:ini %}
+[localexts]
+; Strip plus sign
+exten => _+X!,1,Goto(${EXTEN:1},1)
+{% endcodeblock %}
+
+## Setup voicemail
+
+{% codeblock /etc/asterisk/extensions.conf lang:ini %}
+[localexts]
+; Send to voicemail
+exten => 1,1,Goto(${CHANNEL:4:11},1)
 
 ; Main dialplan
 exten => _1NXXNXXXXXX,1,NoOp()
@@ -196,8 +211,6 @@ exten => _1NXXNXXXXXX,1,NoOp()
   same => n,Dial(SIP/${EXTEN}@flowroute)
   same => n,Hangup()
 {% endcodeblock %}
-
-## Setup voicemail
 
 {% codeblock /etc/asterisk/extensions.conf lang:ini %}
 [inbound]
@@ -231,7 +244,44 @@ pacific=America/Los_Angeles|'vm-received' Q 'digits/at' IMp
 
 ## Emergency Dialing
 
+{% codeblock /etc/asterisk/extensions.conf lang:ini %}
+[localexts]
+; Emergency services, remember to test this
+exten => 911,1,NoOp()
+  same => n,Set(CALLERID(num)=${CHANNEL:4:11})
+  same => n,Dial(SIP/${EXTEN}@flowroute)
+{% endcodeblock %}
+
 A word about enabling 911 on your phone: if you're the type that always has your cell phone in your pocket and you're only going to have an office phone (that a significant other or child wont reach for in an emergency), then this may not make sense for you. My wife and I share a cell phone, and it stays in the car. Other than that, the VoIP phones are the only phones in the house, so you better believe I enabled 911.
+
+# Ending Dialplan
+
+{% codeblock /etc/asterisk/extensions.conf lang:ini %}
+[localexts]
+; Emergency services, remember to test this
+exten => 911,1,NoOp()
+  same => n,Set(CALLERID(num)=${CHANNEL:4:11})
+  same => n,Dial(SIP/${EXTEN}@flowroute)
+
+; Send to voicemail
+exten => 1,1,Goto(${CHANNEL:4:11},1)
+
+; Strip plus sign
+exten => _+X!,1,Goto(${EXTEN:1},1)
+
+; Add 1 before area code
+exten => _NXXNXXXXXX,1,Goto(1${EXTEN},1)
+
+; Main dialplan
+exten => _1NXXNXXXXXX,1,NoOp()
+  same => n,Set(LINE=${CHANNEL:4:11})
+  same => n,GotoIf($[${EXTEN} = ${LINE}]?voicemail:outbound)
+  same => n(voicemail),VoiceMailMain(${LINE}@default,s)
+  same => n,Hangup()
+  same => n(outbound),Set(CALLERID(num)=${LINE})
+  same => n,Dial(SIP/${EXTEN}@flowroute)
+  same => n,Hangup()
+{% endcodeblock %}
 
 # Glossary of Terms
 
@@ -270,3 +320,4 @@ A word about enabling 911 on your phone: if you're the type that always has your
 [vps]: http://en.wikipedia.org/wiki/Virtual_private_server
 [docs1]: https://wiki.asterisk.org/wiki/display/AST/Asterisk+1.8+Documentation
 [docs2]: http://www.voip-info.org/wiki/view/Asterisk+-+documentation+of+application+commands
+[opium-suppositories]: http://www.imdb.com/title/tt0117951/quotes?item=qt0335547
