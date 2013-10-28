@@ -1,33 +1,35 @@
 ---
 layout: post
-title: "Asterisk + Flowroute + SIP Phone = Deskphone"
-date: 2013-08-20 14:04
+title: "How to configure Asterisk for your home office"
+date: 2013-10-28 11:33
 comments: true
 categories:
 - Asterisk
 ---
 
-In this guide I'm going to show you how to:
+I work from home. Along with work comes frequent work-related phone calls. For a while I was taking work calls on my mobile phone, but having work spill over into my personal life was driving me nuts. I also tried a [Skype phone number][skype-number], but managing calls from my computer also drove me nuts.
 
-1. Purchase a phone number that people can dial
-2. Ring a phone on your desk when people dial that number
-3. Route your outgoing calls to the PSTN
-4. Setup a voicemail system that emails voicemail recordings to you
-5. Route 911 calls to your local emergency services
+About a year ago, I determined that the right thing for me was a dedicated phone number that rang an actual telephone on my desk. It would have a decent speakerphone, a dedicated voicemail light, and actual hardware buttons for dialing -- all of those glorious things.
 
-*This makes sense if you a) don't make many phone calls, b) already have a server running on the Internet, c) are happy configuring Asterisk.*
+And then I did a dumb thing.
 
-I am a freelance web developer who works from home. As a result, I need to make and receive phone calls about work stuff on a fairly regular basis. About a year ago, I determined that a dedicated phone number which rang an actual telephone on my desk would suit my needs best.
+Instead of just paying for a normal phone line, which would run me about $20/month, I decided to buy phone service from a wholesale VoIP provider and roll my own [Asterisk][asterisk] installation. Thus began an odyssey in which I learned more about Asterisk and the telecom industry than any decent person should really know.
 
-I had tried taking business calls on my mobile phone, but having business spill over into my personal life was maddening. I had also tried a [Skype phone number][skype-number], but I found managing multiple audio sources on my computer to be cumbersome. A desk phone with large physical buttons, a good speakerphone, and voicemail indicator lights sounded like an improvement.
+All in the name of saving $17/month.
 
-The only problem is that phone lines are expensive. When I looked at the time, everything I was finding would have cost me $20-$30 per month. While I can easily afford $30/month, my Skype number was costing me $5/month for unlimited usage within the US. Plus, there's the principle of the matter: phone lines are just data; they should not cost $30/month. Period.
+But, as they say, every cloud has it's silver lining. And in this case it's that _you_ get to skip all the [terrible documentation](http://www.voip-info.org/wiki/view/Asterisk) and [obtuse telecom jargon](http://en.wikipedia.org/wiki/Direct_inward_dialing) and just _get this fucking thing done_.
 
-Around this time I saw [a presentation][asterisk-talk] by [Mike Frager][mike-frager] about using Perl to control [Asterisk][asterisk], which is open source software for creating phone systems. During Mike's talk, I learned that wholesale VoIP service is ridiculously cheap -- in the realm of my Skype number. You just have to know how to configure Asterisk and Mike's talk had run through a lot of the basics.
+In a series of posts I'm going to show you how to:
 
-Stupidly, I thought to myself, "How hard can this be?".
+1. Purchase a phone number that people can dial.
+2. Ring a phone on your desk when people dial that number.
+3. Route your outgoing calls to the public telephone network.
+4. Setup a voicemail system that emails voicemail recordings to you.
+5. Route 911 calls to your local emergency services.
 
-I will spare you a bunch of bitching and moaning about what a travesty the Asterisk and VoIP resources Google surfaces are and just say that you are a lucky soul, indeed, to have walked down this path after me.
+These posts will assume that you know absolutely nothing about Asterisk, VoIP, or the telecom industry.
+
+_A note: I owe a debt of gratitude to [Mike Frager][mike-frager], who did [a presentation][asterisk-talk] at LA Perl Mongers about using Perl to control Asterisk, and Leif Madsen, Jim Van Meggelen, and Russell Bryant, whose book, [Asterisk: The Definitive Guide](http://ofps.oreilly.com/titles/9781449332426/), can be accessed for free on the web (as of the time of this writing)._
 
 [asterisk]: http://www.asterisk.org/
 [ubuntu]: http://www.ubuntu.com/
