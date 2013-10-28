@@ -3,6 +3,7 @@ layout: post
 title: "Deskphone: Configuring 911"
 date: 2013-08-29
 comments: true
+published: false
 categories:
 - Asterisk
 ---

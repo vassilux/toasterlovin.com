@@ -3,6 +3,7 @@ layout: post
 title: "Deskphone: Costs"
 date: 2013-08-22
 comments: true
+published: false
 categories:
 - Asterisk
 ---

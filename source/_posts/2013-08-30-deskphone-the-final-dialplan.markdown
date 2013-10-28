@@ -3,6 +3,7 @@ layout: post
 title: "Deskphone: The final dialplan"
 date: 2013-08-30
 comments: true
+published: false
 categories:
 - Asterisk
 ---

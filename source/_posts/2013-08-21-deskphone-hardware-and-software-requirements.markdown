@@ -3,6 +3,7 @@ layout: post
 title: "Deskphone: Hardware and software requirements"
 date: 2013-08-21
 comments: true
+published: false
 categories:
 - Asterisk
 ---

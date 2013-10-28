@@ -3,6 +3,7 @@ layout: post
 title: "Deskphone: Connecting your phone to Asterisk"
 date: 2013-08-25
 comments: true
+published: false
 categories:
 - Asterisk
 ---

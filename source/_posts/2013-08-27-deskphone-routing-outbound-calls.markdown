@@ -3,6 +3,7 @@ layout: post
 title: "Deskphone: Routing outbound calls"
 date: 2013-08-27
 comments: true
+published: false
 categories:
 - Asterisk
 ---

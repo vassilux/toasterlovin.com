@@ -3,6 +3,7 @@ layout: post
 title: "Deskphone: Configuring voicemail"
 date: 2013-08-28
 comments: true
+published: false
 categories:
 - Asterisk
 ---

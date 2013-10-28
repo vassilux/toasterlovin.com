@@ -3,6 +3,7 @@ layout: post
 title: "Deskphone: Connecting Asterisk to Flowroute"
 date: 2013-08-24
 comments: true
+published: false
 categories:
 - Asterisk
 ---
