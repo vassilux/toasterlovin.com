@@ -13,6 +13,8 @@ About a year ago, I determined that the right thing for me was a dedicated phone
 
 And then I did a dumb thing.
 
+<!-- more -->
+
 Instead of just paying for a normal phone line, which would run me about $20/month, I decided to buy phone service from a wholesale VoIP provider and roll my own [Asterisk][asterisk] installation. Thus began an odyssey in which I learned more about Asterisk and the telecom industry than any decent person should really know.
 
 All in the name of saving $17/month.
