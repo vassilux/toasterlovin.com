@@ -11,6 +11,8 @@ Over time, one of my large Ruby on Rails apps has accumulated a lot of cruft in 
 
 Well, I recently went through `routes.rb` and did some major housekeeping. But this app has a bunch of models, with controllers for most of them in both the default namespace and an admin namespace.
 
+<!-- more -->
+
 So, even after I had spent the better part of a day cleaning house, my spidey-sense was still tingling. I just didn't feel like I could be _sure_ that everything was copacetic. And I've learned the hard way that this means it's time for some tests...
 
 Since routes are the first interface to a web app, I figured a good place to start would be to make sure there were no orphaned routes -- routes that do not lead to a controller action. Also, I wanted a _single_ test that would test _all_ of my routes, so there would be no forgetting to add tests down the road.
